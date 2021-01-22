@@ -15,15 +15,15 @@ https://www.msys2.org
 ```
 `x86`
 
-![Image](doc/x86_native_win.jpg "x86 Native Tools Command Prompt for VS 2019")
+![Image](https://github.com/hhool/x264_build/blob/master/doc/x86_native_win.jpg "x86 Native Tools Command Prompt for VS 2019")
 
-![Image](doc/msys2_x86_win.jpg "msys2 x86 console")
+![Image](https://github.com/hhool/x264_build/blob/master/doc/msys2_x86_win.jpg "msys2 x86 console")
 
 `x64`
 
-![Image](doc/x64_native_win.jpg "x64 Native Tools Command Prompt for VS 2019")
+![Image](https://github.com/hhool/x264_build/blob/master/doc/x64_native_win.jpg "x64 Native Tools Command Prompt for VS 2019")
 
-![Image](doc/msys2_x64_win.jpg "msys2 x64 console")
+![Image](https://github.com/hhool/x264_build/blob/master/doc/msys2_x64_win.jpg "msys2 x64 console")
 
 `android`
 ```
