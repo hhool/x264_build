@@ -1,8 +1,10 @@
 #
 ## get code
+```
 wget https://download.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-20191217-2245.tar.bz2
 tar xvf x264-snapshot-20191217-2245.tar.bz2
 mv x264-snapshot-20191217-2245 src
+```
 ## build
 `windows`
 ```
