@@ -8,7 +8,7 @@ API=22
 
 function x264_build
 {
-cd src
+pushd src
 echo "CC:"${CC}
 echo "CXX:"${CXX}
 echo "ADDITIONAL_CONFIGURE_FLAG:"${ADDITIONAL_CONFIGURE_FLAG}
@@ -22,7 +22,7 @@ ${ADDITIONAL_CONFIGURE_FLAG} \
 make clean
 make -j8
 make install
-cd ..
+popd
 }
 
 #x86
