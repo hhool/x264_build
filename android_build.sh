@@ -1,5 +1,7 @@
 #!/bin/bash
-NDK_ROOT=/mnt/hgfs/project/x264/android-ndk-r22
+if [ -z ${NDK_ROOT} ]; then
+NDK_ROOT=/opt/env/android-ndk-r22
+fi
 TOOLCHAIN=${NDK_ROOT}/toolchains/llvm/prebuilt/linux-x86_64
 API=22
 
