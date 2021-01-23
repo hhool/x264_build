@@ -3,6 +3,7 @@ if [ -z ${NDK_ROOT} ]; then
 NDK_ROOT=/opt/env/android-ndk-r22
 fi
 TOOLCHAIN=${NDK_ROOT}/toolchains/llvm/prebuilt/linux-x86_64
+
 API=22
 
 function x264_build

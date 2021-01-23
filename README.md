@@ -15,20 +15,20 @@ https://www.msys2.org
 ```
 `x86`
 
-![Image](https://github.com/hhool/x264_build/blob/master/doc/x86_native_win.jpg "x86 Native Tools Command Prompt for VS 2019")
+![Image](doc/x86_native_win.jpg "x86 Native Tools Command Prompt for VS 2019")
 
-![Image](https://github.com/hhool/x264_build/blob/master/doc/msys2_x86_win.jpg "msys2 x86 console")
+![Image](doc/msys2_x86_win.jpg "msys2 x86 console")
 
 `x64`
 
-![Image](https://github.com/hhool/x264_build/blob/master/doc/x64_native_win.jpg "x64 Native Tools Command Prompt for VS 2019")
+![Image](doc/x64_native_win.jpg "x64 Native Tools Command Prompt for VS 2019")
 
-![Image](https://github.com/hhool/x264_build/blob/master/doc/msys2_x64_win.jpg "msys2 x64 console")
+![Image](doc/msys2_x64_win.jpg "msys2 x64 console")
 
 `android`
 ```
-download: android-ndk-r22 (linux)
-
-NDK_ROOT=path_to_android-ndk-r22 android_build.sh
+wget https://dl.google.com/android/repository/android-ndk-r22-linux-x86_64.zip
+unzip android-ndk-r22-linux-x86_64.zip
+NDK_ROOT=`pwd`/path_to_android-ndk-r22 . android_build.sh
 ```
 
