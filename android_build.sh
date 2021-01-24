@@ -1,8 +1,25 @@
 #!/bin/bash
-if [ -z ${NDK_ROOT} ]; then
+if [ -z ${NDK_ROOT} ]
+then
 NDK_ROOT=/opt/env/android-ndk-r22
 fi
-TOOLCHAIN=${NDK_ROOT}/toolchains/llvm/prebuilt/linux-x86_64
+
+HOST_OS="linux"
+if [[ $(uname) == "Darwin" ]]
+then
+ HOST_OS="darwin"
+fi
+
+TOOLCHAIN=${NDK_ROOT}/toolchains/llvm/prebuilt/${HOST_OS}-x86_64
+
+echo "HOST_OS:"${HOST_OS}
+echo "TOOLCHAIN:"${TOOLCHAIN}
+
+if [ ! -d ${TOOLCHAIN} ]
+then
+  echo “wrong:"${NDK_ROOT}
+  exit 1;
+fi
 
 API=22
 

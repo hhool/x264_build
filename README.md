@@ -27,8 +27,13 @@ https://www.msys2.org
 
 `android`
 ```
+HOST_OS: Linux
 wget https://dl.google.com/android/repository/android-ndk-r22-linux-x86_64.zip
 unzip android-ndk-r22-linux-x86_64.zip
-NDK_ROOT=`pwd`/path_to_android-ndk-r22 . android_build.sh
-```
+NDK_ROOT=path_to_android-ndk-r22 . android_build.sh
 
+HOST_OS: Mac
+wget https://dl.google.com/android/repository/android-ndk-r22-darwin-x86_64.zip
+unzip android-ndk-r22-darwin-x86_64.zip
+NDK_ROOT=path_to_android-ndk-r22 . android_build.sh
+```
