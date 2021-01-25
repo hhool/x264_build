@@ -41,7 +41,7 @@ make clean
 make -j8
 make install
 popd
-rm android_build
+rm -rf android_build
 }
 
 #x86
