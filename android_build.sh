@@ -17,7 +17,7 @@ echo "TOOLCHAIN:"${TOOLCHAIN}
 
 if [ ! -d ${TOOLCHAIN} ]
 then
-  echo “wrong:"${NDK_ROOT}
+  echo "wrong:"${NDK_ROOT}
   exit 1;
 fi
 
@@ -25,11 +25,12 @@ API=22
 
 function x264_build
 {
-pushd src
+mkdir android_build
+pushd android_build
 echo "CC:"${CC}
 echo "CXX:"${CXX}
 echo "ADDITIONAL_CONFIGURE_FLAG:"${ADDITIONAL_CONFIGURE_FLAG}
-./configure --prefix=$PREFIX \
+../src/configure --prefix=$PREFIX \
 --extra-cflags=${EXTRA_CFLAGS} \
 --host=${HOST} \
 --cross-prefix=${CROSS_PREFIX} \
@@ -40,6 +41,7 @@ make clean
 make -j8
 make install
 popd
+rm android_build
 }
 
 #x86

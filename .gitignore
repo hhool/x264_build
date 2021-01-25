@@ -4,3 +4,4 @@ scratch-*
 thin-*
 .DS_Store
 .vscode
+android_build
