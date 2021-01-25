@@ -17,99 +17,99 @@ LIPO="y"
 
 if [ "$*" ]
 then
-	if [ "$*" = "lipo" ]
-	then
-		# skip compile
-		COMPILE=
-	else
-		ARCHS="$*"
-		if [ $# -eq 1 ]
-		then
-			# skip lipo
-			LIPO=
-		fi
-	fi
+    if [ "$*" = "lipo" ]
+    then
+        # skip compile
+        COMPILE=
+    else
+        ARCHS="$*"
+        if [ $# -eq 1 ]
+        then
+            # skip lipo
+            LIPO=
+        fi
+    fi
 fi
 
 if [ "$COMPILE" ]
 then
-	CWD=`pwd`
-	for ARCH in $ARCHS
-	do
-		echo "building $ARCH..."
-		mkdir -p "$SCRATCH/$ARCH"
-		cd "$SCRATCH/$ARCH"
-		CFLAGS="-arch $ARCH"
+    CWD=`pwd`
+    for ARCH in $ARCHS
+    do
+        echo "building $ARCH..."
+        mkdir -p "$SCRATCH/$ARCH"
+        cd "$SCRATCH/$ARCH"
+        CFLAGS="-arch $ARCH"
         ASFLAGS=
         ADDITIONAL_CONFIGURE_FLAG=
-		if [ "$ARCH" = "i386" -o "$ARCH" = "x86_64" ]
-		then
-		    PLATFORM="iPhoneSimulator"
+        if [ "$ARCH" = "i386" -o "$ARCH" = "x86_64" ]
+        then
+            PLATFORM="iPhoneSimulator"
             ADDITIONAL_CONFIGURE_FLAG="--disable-asm"
-		    CPU=
-		    if [ "$ARCH" = "x86_64" ]
-		    then
-		    	CFLAGS="$CFLAGS -mios-simulator-version-min=7.0"
-		    	HOST=
-		    else
-		    	CFLAGS="$CFLAGS -mios-simulator-version-min=5.0"
-			HOST="--host=i386-apple-darwin"
-		    fi
-		else
-		    PLATFORM="iPhoneOS"
-		    if [ $ARCH = "arm64" ]
-		    then
-		        HOST="--host=aarch64-apple-darwin"
-			XARCH="-arch aarch64"
-		    else
-		        HOST="--host=arm-apple-darwin"
-			XARCH="-arch arm"
-		    fi
+            CPU=
+            if [ "$ARCH" = "x86_64" ]
+            then
+                CFLAGS="$CFLAGS -mios-simulator-version-min=7.0"
+                HOST=
+            else
+                CFLAGS="$CFLAGS -mios-simulator-version-min=5.0"
+            HOST="--host=i386-apple-darwin"
+            fi
+        else
+            PLATFORM="iPhoneOS"
+            if [ $ARCH = "arm64" ]
+            then
+                HOST="--host=aarch64-apple-darwin"
+            XARCH="-arch aarch64"
+            else
+                HOST="--host=arm-apple-darwin"
+            XARCH="-arch arm"
+            fi
             CFLAGS="$CFLAGS -fembed-bitcode -mios-version-min=7.0"
             ASFLAGS="$CFLAGS"
-		fi
+        fi
 
-		XCRUN_SDK=`echo $PLATFORM | tr '[:upper:]' '[:lower:]'`
-		CC="xcrun -sdk $XCRUN_SDK clang -Wno-ignored-optimization-argument -Wno-unused-command-line-argument -Wno-incompatible-pointer-types"
-		if [ $PLATFORM = "iPhoneOS" ]
-		then
-		    export AS="$CWD/$SOURCE/tools/gas-preprocessor.pl $XARCH -- $CC"
-		else
-		    export -n AS
-		fi
-		CXXFLAGS="$CFLAGS"
-		LDFLAGS="$CFLAGS"
-		CC=$CC $CWD/$SOURCE/configure \
-		    $CONFIGURE_FLAGS \
+        XCRUN_SDK=`echo $PLATFORM | tr '[:upper:]' '[:lower:]'`
+        CC="xcrun -sdk $XCRUN_SDK clang -Wno-ignored-optimization-argument -Wno-unused-command-line-argument -Wno-incompatible-pointer-types"
+        if [ $PLATFORM = "iPhoneOS" ]
+        then
+            export AS="$CWD/$SOURCE/tools/gas-preprocessor.pl $XARCH -- $CC"
+        else
+            export -n AS
+        fi
+        CXXFLAGS="$CFLAGS"
+        LDFLAGS="$CFLAGS"
+        CC=$CC $CWD/$SOURCE/configure \
+            $CONFIGURE_FLAGS \
             $ADDITIONAL_CONFIGURE_FLAG \
-		    $HOST \
-		    --extra-cflags="$CFLAGS" \
-		    --extra-asflags="$ASFLAGS" \
-		    --extra-ldflags="$LDFLAGS" \
-		    --prefix="$THIN/$ARCH" || exit 1
+            $HOST \
+            --extra-cflags="$CFLAGS" \
+            --extra-asflags="$ASFLAGS" \
+            --extra-ldflags="$LDFLAGS" \
+            --prefix="$THIN/$ARCH" || exit 1
         echo "pwd:"`pwd`
         echo "CFLAGS:"${CFLAGS}
         echo "CC:"${CC}
-		make -j3 install || exit 1
-		cd $CWD
-	done
+        make -j3 install || exit 1
+        cd $CWD
+    done
 fi
 
 if [ "$LIPO" ]
 then
-	echo "building fat binaries..."
-	mkdir -p $FAT/lib
-	set - $ARCHS
-	CWD=`pwd`
-	cd $THIN/$1/lib
-	for LIB in *.a
-	do
-		cd $CWD
-		lipo -create `find $THIN -name $LIB` -output $FAT/lib/$LIB
-	done
+    echo "building fat binaries..."
+    mkdir -p $FAT/lib
+    set - $ARCHS
+    CWD=`pwd`
+    cd $THIN/$1/lib
+    for LIB in *.a
+    do
+        cd $CWD
+        lipo -create `find $THIN -name $LIB` -output $FAT/lib/$LIB
+    done
 
-	cd $CWD
-	cp -rf $THIN/$1/include $FAT
+    cd $CWD
+    cp -rf $THIN/$1/include $FAT
     rm -rf $THIN
     rm -rf $SCRATCH
 fi
